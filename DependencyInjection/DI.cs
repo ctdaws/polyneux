@@ -35,7 +35,7 @@ namespace Polyneux
                                     var gameObject = b.gameObject;
                                     var type = f.FieldType;
                                     Debug.Log("Creating new " + type);
-                                    gameObject.AddComponent(type);
+                                    f.SetValue(b, gameObject.AddComponent(type));
                                 });
                            });
         }
