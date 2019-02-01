@@ -24,7 +24,20 @@ namespace Polyneux
             rootGameObjects.SelectMany(g => g.GetComponents<MonoBehaviour>())
                            .Where(b => types.Any(t => b.GetType().IsAssignableFrom(t)))
                            .ToList()
-                           .ForEach(Debug.Log);
+                           .ForEach(b =>
+                           {
+                               b.GetType()
+                                .GetFields(BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance)
+                                .Where(f => f.IsDefined(typeof(Autowire), true))
+                                .ToList()
+                                .ForEach(f =>
+                                {
+                                    var gameObject = b.gameObject;
+                                    var type = f.FieldType;
+                                    Debug.Log("Creating new " + type);
+                                    gameObject.AddComponent(type);
+                                });
+                           });
         }
 
         private static List<Type> GetClassesWithAnnotation()
