@@ -34,7 +34,6 @@ namespace Polyneux
                                 {
                                     var gameObject = b.gameObject;
                                     var type = f.FieldType;
-                                    Debug.Log("Creating new " + type);
                                     f.SetValue(b, gameObject.AddComponent(type));
                                 });
                            });
@@ -46,7 +45,6 @@ namespace Polyneux
                            .GetTypes()
                            .Where(t =>
                                t.IsClass &&
-                               t.Namespace != "Polyneux" &&
                                Attribute.GetCustomAttribute(t, typeof(DI)) != null)
                            .ToList();
 
